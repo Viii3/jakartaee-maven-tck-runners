@@ -514,6 +514,249 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>setup-0</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-file-user</argument>
+                                <argument>--groups</argument>
+                                <argument>staff:mgr:DIRECTOR</argument>
+                                <argument>--passwordfile</argument>
+                                <argument>${project.build.directory}/../j2ee.pass</argument>
+                                <argument>j2ee</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-1</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-file-user</argument>
+                                <argument>--groups</argument>
+                                <argument>guest:OTHERROLE</argument>
+                                <argument>--passwordfile</argument>
+                                <argument>${project.build.directory}/../javajoe.pass</argument>
+                                <argument>javajoe</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-2</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>set</argument>
+                                <argument>server-config.network-config.protocols.protocol.http-listener-1.http.trace-enabled=true</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-3</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-jms-resource</argument>
+                                <argument>--restype</argument>
+                                <argument>jakarta.jms.Queue</argument>
+                                <argument>--property</argument>
+                                <argument>imqDestinationName=myQueue</argument>
+                                <argument>MY_QUEUE</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-4</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-jms-resource</argument>
+                                <argument>--restype</argument>
+                                <argument>jakarta.jms.Topic</argument>
+                                <argument>--property</argument>
+                                <argument>imqDestinationName=myTopic</argument>
+                                <argument>MY_TOPIC</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-5</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-jdbc-connection-pool</argument>
+                                <argument>--restype</argument>
+                                <argument>javax.sql.DataSource</argument>
+                                <argument>--datasourceclassname</argument>
+                                <argument>org.apache.derby.jdbc.ClientDataSource</argument>
+                                <argument>--property</argument>
+                                <argument>DatabaseName=derbyDB:serverName=localhost:PortNumber=1527:User=cts1:Password=cts1</argument>
+                                <argument>--steadypoolsize</argument>
+                                <argument>32</argument>
+                                <argument>--maxpoolsize</argument>
+                                <argument>64</argument>
+                                <argument>cts-derby-pool</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-6</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-jdbc-resource</argument>
+                                <argument>--connectionpoolid</argument>
+                                <argument>cts-derby-pool</argument>
+                                <argument>jdbc/DB1</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-7</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-jms-resource</argument>
+                                <argument>--restype</argument>
+                                <argument>jakarta.jms.QueueConnectionFactory</argument>
+                                <argument>jms/QueueConnectionFactory</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-8</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-jms-resource</argument>
+                                <argument>--restype</argument>
+                                <argument>jakarta.jms.TopicConnectionFactory</argument>
+                                <argument>jms/TopicConnectionFactory</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-9</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>create-jms-resource</argument>
+                                <argument>--restype</argument>
+                                <argument>jakarta.jms.ConnectionFactory</argument>
+                                <argument>--property</argument>
+                                <argument>name=cFactory</argument>
+                                <argument>jms/ConnectionFactory</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-10</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>list-jdbc-connection-pools</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-11</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>list-jdbc-resources</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-12</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>list-file-users</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>12-StopDomain1</id>
                         <goals>
                             <goal>exec</goal>
@@ -778,19 +1021,6 @@
                             <systemPropertyVariables>
                                 <PAYARA_HOME>${payara.home}</PAYARA_HOME>
                                 <payara.home>${payara.home}</payara.home>
-                                <payara.postBootCommands>create-file-user --groups staff:mgr:DIRECTOR --passwordfile ${project.build.directory}/../j2ee.pass j2ee
-                                    create-file-user --groups guest:OTHERROLE --passwordfile ${project.build.directory}/../javajoe.pass javajoe
-                                    set server-config.network-config.protocols.protocol.http-listener-1.http.trace-enabled=true
-                                    create-jms-resource --restype jakarta.jms.Queue --property imqDestinationName=myQueue MY_QUEUE
-                                    create-jms-resource --restype jakarta.jms.Topic --property imqDestinationName=myTopic MY_TOPIC
-                                    create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname org.apache.derby.jdbc.ClientDataSource --property DatabaseName=derbyDB:serverName=localhost:PortNumber=1527:User=cts1:Password=cts1 --steadypoolsize 32 --maxpoolsize 64 cts-derby-pool
-                                    create-jdbc-resource --connectionpoolid cts-derby-pool jdbc/DB1
-                                    create-jms-resource --restype jakarta.jms.QueueConnectionFactory jms/QueueConnectionFactory
-                                    create-jms-resource --restype jakarta.jms.TopicConnectionFactory jms/TopicConnectionFactory
-                                    create-jms-resource --restype jakarta.jms.ConnectionFactory --property name=cFactory jms/ConnectionFactory
-                                    list-jdbc-connection-pools
-                                    list-jdbc-resources
-                                    list-file-users</payara.postBootCommands>
                                 <junit.log.traceflag>true</junit.log.traceflag>
                                 <harness.log.traceflag>true</harness.log.traceflag>
                                 <cts.harness.debug>true</cts.harness.debug>
@@ -801,6 +1031,7 @@
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <PAYARA_HOME>${payara.home}</PAYARA_HOME>
+                                <payara.home>${payara.home}</payara.home>
                             </environmentVariables>
                         </configuration>
                     </execution>
@@ -831,19 +1062,6 @@
                             <systemPropertyVariables>
                                 <PAYARA_HOME>${payara.home}</PAYARA_HOME>
                                 <payara.home>${payara.home}</payara.home>
-                                <payara.postBootCommands>create-file-user --groups staff:mgr:DIRECTOR --passwordfile ${project.build.directory}/../j2ee.pass j2ee
-                                    create-file-user --groups guest:OTHERROLE --passwordfile ${project.build.directory}/../javajoe.pass javajoe
-                                    set server-config.network-config.protocols.protocol.http-listener-1.http.trace-enabled=true
-                                    create-jms-resource --restype jakarta.jms.Queue --property imqDestinationName=myQueue MY_QUEUE
-                                    create-jms-resource --restype jakarta.jms.Topic --property imqDestinationName=myTopic MY_TOPIC
-                                    create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname org.apache.derby.jdbc.ClientDataSource --property DatabaseName=derbyDB:serverName=localhost:PortNumber=1527:User=cts1:Password=cts1 --steadypoolsize 32 --maxpoolsize 64 cts-derby-pool
-                                    create-jdbc-resource --connectionpoolid cts-derby-pool jdbc/DB1
-                                    create-jms-resource --restype jakarta.jms.QueueConnectionFactory jms/QueueConnectionFactory
-                                    create-jms-resource --restype jakarta.jms.TopicConnectionFactory jms/TopicConnectionFactory
-                                    create-jms-resource --restype jakarta.jms.ConnectionFactory --property name=cFactory jms/ConnectionFactory
-                                    list-jdbc-connection-pools
-                                    list-jdbc-resources
-                                    list-file-users</payara.postBootCommands>
                                 <junit.log.traceflag>true</junit.log.traceflag>
                                 <harness.log.traceflag>true</harness.log.traceflag>
                                 <cts.harness.debug>true</cts.harness.debug>
@@ -853,6 +1071,7 @@
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <PAYARA_HOME>${payara.home}</PAYARA_HOME>
+                                <payara.home>${payara.home}</payara.home>
                             </environmentVariables>
                         </configuration>
                     </execution>
