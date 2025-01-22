@@ -68,7 +68,7 @@
         <derby.dbName>derbyDB</derby.dbName>
         <derby.dml.file>derby${file.separator}derby.dml.sql</derby.dml.file>
         <derby.driver>org.apache.derby.jdbc.ClientDriver</derby.driver>
-        <derby.home>${project.build.directory}${file.separator}${payara.home}${file.separator}javadb</derby.home>
+        <derby.home>${payara.home}${file.separator}javadb</derby.home>
         <derby.passwd>cts1</derby.passwd>
         <derby.poolName>cts-derby-pool</derby.poolName>
         <derby.port>1527</derby.port>
