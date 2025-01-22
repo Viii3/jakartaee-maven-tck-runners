@@ -197,7 +197,7 @@ javaee.level=full
 # @orb.port    The port number the vendor implementation is listening
 #              to for service requests.
 ########################################################################
-javaee.home=/Users/alwjosep/Documents/jakartaee-tck/glassfish-runner/jms-platform-tck/target/glassfish8
+javaee.home=./target/payara7/glassfish
 orb.host=localhost
 orb.port=4848
 
@@ -215,7 +215,7 @@ orb.port=4848
 # @orb.port       The port number the RI is listening to for service
 #                 requests.
 ########################################################################
-javaee.home.ri=
+javaee.home.ri=${javaee.home}
 orb.host.ri=
 orb.port.ri=3700
 
@@ -358,6 +358,7 @@ vi.domain.name=domain1
 vi.domain=${vi.domain.dir}/${vi.domain.name}
 vi.asenv.loc=${javaee.home}/config
 vi.imqbin.loc=${javaee.home}/../mq/bin
+## TODO: vi.lib
 vi.lib=${javaee.home}/server/lib
 vi.log.file.location=${vi.domain}/logs
 vi.modules=${javaee.home}/modules
