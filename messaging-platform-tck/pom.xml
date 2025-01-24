@@ -109,10 +109,13 @@
         <password2>cts1</password2>
         <pool.properties>${derby.properties}</pool.properties>
         <poolName>${derby.poolName}</poolName>
+        <propName>SupportsXA=true${path.separator}ProviderIntegrationMode=javabean${path.separator}ConnectionFactoryClassName=com.sun.messaging.ConnectionFactory${path.separator}CommonSetterMethodName=setProperty${path.separator}UserName=guest${path.separator}Password=guest${path.separator}QueueConnectionFactoryClassName=com.sun.messaging.QueueConnectionFactory${path.separator}TopicConnectionFactoryClassName=com.sun.messaging.TopicConnectionFactory${path.separator}QueueClassName=com.sun.messaging.Queue${path.separator}TopicClassName=com.sun.messaging.Topic${path.separator}LogLevel=info${path.separator}UserName=guest${path.separator}Password=guest${path.separator}XAQueueConnectionFactoryClassName=com.sun.messaging.XAQueueConnectionFactory${path.separator}XATopicConnectionFactoryClassName=com.sun.messaging.XATopicConnectionFactory${path.separator}XAConnectionFactoryClassName=com.sun.messaging.XAConnectionFactory</propName>
         <ptable>ctstable1</ptable>
         <restype>javax.sql.DataSource</restype>
         <ri.home>${payara.home}${file.separator}mq</ri.home>
+        <s1as.imq.share.lib>${javaee.home}${file.separator}..${file.separator}mq${file.separator}lib</s1as.imq.share.lib>
         <s1as.imqbin.loc>${javaee.home}${file.separator}..${file.separator}mq${file.separator}bin</s1as.imqbin.loc>
+        <s1as.lib>${javaee.home}${file.separator}lib</s1as.lib>
         <sql.directory>.${file.separator}sql</sql.directory>
         <ts.home>.${file.separator}jakartaeetck${file.separator}</ts.home>
         <user1>cts1</user1>
@@ -450,6 +453,32 @@
                                 <argument>--file</argument>
                                 <argument>${project.basedir}${file.separator}create.jms.template</argument>
                             </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>12-createJMSRAtemplate</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <executable>${payara.asadmin}</executable>
+                            <arguments>
+                                <argument>--host</argument>
+                                <argument>localhost</argument>
+                                <argument>--user</argument>
+                                <argument>admin</argument>
+                                <argument>--passwordfile</argument>
+                                <argument>${project.basedir}${file.separator}j2ee.pass</argument>
+                                <argument>--echo=true</argument>
+                                <argument>multimode</argument>
+                                <argument>--file</argument>
+                                <argument>${project.basedir}${file.separator}create.jmsra.template</argument>
+                            </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                                <successCode>1</successCode>
+                            </successCodes>
                         </configuration>
                     </execution>
                     <execution>
@@ -955,6 +984,42 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>09-copy.mq.jars</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <copy file="${s1as.imq.share.lib}${file.separator}imq.jar" overwrite="yes" todir="${s1as.lib}"/>
+                                <copy file="${s1as.imq.share.lib}${file.separator}imqutil.jar" overwrite="yes" todir="${s1as.lib}"/>
+                                <copy file="${s1as.imq.share.lib}${file.separator}imqjmx.jar" overwrite="yes" todir="${s1as.lib}"/>
+                                <copy file="${s1as.imq.share.lib}${file.separator}imqbroker.jar" overwrite="yes" todir="${s1as.lib}"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>10-create-resource-adapter-config</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <echo message="create-resource-adapter-config jmsra"/>
+                                <exec executable="${payara.asadmin}">
+                                    <arg line=" --user admin"/>
+                                    <arg line=" --passwordfile ${project.basedir}/j2ee.pass"/>
+                                    <arg line=" --host localhost"/>
+                                    <arg line=" --port 4848"/>
+                                    <arg line=" create-resource-adapter-config"/>
+                                    <arg line=" --property ${propName}"/>
+                                    <arg line=" jmsra"/>
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>stop-database</id>
                         <phase>post-integration-test</phase>
                         <goals>
@@ -1009,6 +1074,7 @@
                                 <java.io.tmpdir>${root.tmp.directory}${file.separator}tmp</java.io.tmpdir>
                                 <project.basedir>${project.basedir}</project.basedir>
                                 <arquillian.xml>appclient-arquillian.xml</arquillian.xml>
+                                <ts.home>${ts.home}</ts.home>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <PAYARA_HOME>${payara.home}</PAYARA_HOME>
@@ -1049,6 +1115,7 @@
                                 <root.tmp.directory>${root.tmp.directory}</root.tmp.directory>
                                 <java.io.tmpdir>${root.tmp.directory}${file.separator}tmp</java.io.tmpdir>
                                 <arquillian.xml>arquillian.xml</arquillian.xml>
+                                <ts.home>${ts.home}</ts.home>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <PAYARA_HOME>${payara.home}</PAYARA_HOME>
