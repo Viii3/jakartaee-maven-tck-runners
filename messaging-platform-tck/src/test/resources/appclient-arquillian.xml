@@ -23,6 +23,7 @@
                 <property name="unpackClientEar">true</property>
                 <!-- Need to populate from ts.jte command.testExecuteAppClient setting for glassfish -->
                 <property name="clientCmdLineString">${payara.home}/glassfish/bin/appclient \
+                    -classpath ${appclient.dir}/selectorQueue_appclient_vehicle_client.jar${path.separator}${appclient.dir}/../lib/arquillian-protocol-lib.jar${path.separator}${appclient.dir}/../lib/runtime.jar${path.separator}${appclient.dir}/../lib/tck-porting-lib.jar${path.separator}${appclient.dir}/lib/arquillian-core.jar${path.separator}${appclient.dir}/lib/arquillian-junit5.jar${path.separator}${payara.home}/glassfish/modules/security.jar${path.separator}${payara.home}/glassfish/lib/gf-client.jar \
                     -Djdk.tls.client.enableSessionTicketExtension=false \
                     -Djdk.tls.server.enableSessionTicketExtension=false \
                     -Djava.security.policy=${payara.home}/glassfish/lib/appclient/client.policy \

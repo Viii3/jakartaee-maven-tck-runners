@@ -1057,6 +1057,7 @@
                                 <additionalClasspathElement>${payara.home}${file.separator}mq${file.separator}lib${file.separator}jms.jar</additionalClasspathElement>
                                 <additionalClasspathElement>${payara.home}${file.separator}mq${file.separator}lib${file.separator}fscontext.jar</additionalClasspathElement>
                                 <additionalClasspathElement>${project.build.directory}${file.separator}lib${file.separator}runtime.jar</additionalClasspathElement>
+                                <additionalClasspathElement>${payara.home}${file.separator}glassfish${file.separator}lib${file.separator}gf-client.jar</additionalClasspathElement>
                             </additionalClasspathElements>
                             <includes>
                                 <include>com/sun/ts/tests/jms/**/*Test*.java</include>
@@ -1075,6 +1076,7 @@
                                 <project.basedir>${project.basedir}</project.basedir>
                                 <arquillian.xml>appclient-arquillian.xml</arquillian.xml>
                                 <ts.home>${ts.home}</ts.home>
+                                <appclient.dir>${project.build.directory}${file.separator}appclient</appclient.dir>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <PAYARA_HOME>${payara.home}</PAYARA_HOME>
