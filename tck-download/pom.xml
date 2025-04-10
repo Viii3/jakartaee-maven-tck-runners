@@ -53,6 +53,7 @@
         <module>jakarta-inject-tck</module>
         <module>jakarta-authentication-tck</module>
         <module>jakarta-mail-platform-tck</module>
+        <module>jakarta-pages-platform-tck</module>
     </modules>
 
     <build>

@@ -204,6 +204,7 @@
         <module>messaging-tck</module>
         <module>messaging-platform-tck</module>
         <module>mail-platform-tck</module>
+        <module>pages-platform-tck</module>
     </modules>
 
     <dependencyManagement>
